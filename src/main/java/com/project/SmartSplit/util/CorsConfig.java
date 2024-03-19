@@ -21,7 +21,7 @@ public class CorsConfig {
                 registry.addMapping("/**")
                         // Allow requests from the specified origin (localhost:8080)
                         .allowedOrigins("http://localhost:8080")
-                        .allowedOrigins("http://localhost:8081")
+                        .allowedOrigins("exp://192.168.25.253:8081")
                         // Allow specified HTTP methods for CORS requests
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS", "HEAD", "PATCH", "TRACE", "LOGOUT",
                                 "CONNECT", "LINK", "UNLINK", "COPY", "LOCK", "UNLOCK", "VIEW", "LOGIN", "MERGE")

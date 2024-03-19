@@ -11,9 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequiredArgsConstructor
@@ -28,12 +26,10 @@ public class AuthenticationController {
         return ResponseEntity.ok("test");
     }
 
-
-    // The authenticateUser() method takes in an AuthenticationRequest object, which contains the username and password.
-    // The method returns an AuthenticationResponse object, which contains the JWT and refresh token, and the user's roles.
     @PostMapping("/login")
     public ResponseEntity<?> authenticateUser(@RequestBody AuthenticationRequest authenticationRequest) {
         try {
+
             // authenticate() method throws an AuthenticationServiceException if the username or password is invalid.
             AuthenticationResponse authResponse = authenticationService.authenticate(authenticationRequest);
 
@@ -41,8 +37,7 @@ public class AuthenticationController {
             System.out.println("refresh token: " + authResponse.getRefreshToken());
             System.out.println("jwt token: " + authResponse.getAccessToken());
             System.out.println("roles: " + authResponse.getRoles());
-            System.out.println("email: " + authenticationRequest.getEmail());
-            System.out.println("password: " + authenticationRequest.getPassword());
+            System.out.println("username: " + authenticationRequest.getEmail());
 
             // if the username and password are valid, the method returns an AuthenticationResponse object OK response.
             return ResponseEntity.ok(authResponse);
@@ -52,18 +47,14 @@ public class AuthenticationController {
         }
     }
 
-    // The refreshToken() method takes in a RefreshTokenRequest object, which contains the refresh token.
-    // The method returns an AuthenticationResponse object, which contains the JWT and refresh token, and the user's roles.
     @PostMapping("/refresh_token")
     public ResponseEntity<?> refreshToken(@RequestBody RefreshTokenRequest refreshTokenRequest) {
         try {
-            // try to refresh the token, if the refresh token is valid, the method returns an AuthenticationResponse object OK response.
             AuthenticationResponse authResponse = refreshTokenService.refresh(refreshTokenRequest.getRefreshToken());
             System.out.println("refresh token: " + authResponse.getRefreshToken());
             System.out.println("jwt token: " + authResponse.getAccessToken());
             return ResponseEntity.ok(authResponse);
         } catch (TokenRefreshException e) {
-            // else, the method returns a 401 Unauthorized response.
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
         }
     }

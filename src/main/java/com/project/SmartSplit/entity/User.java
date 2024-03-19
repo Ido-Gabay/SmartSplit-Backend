@@ -1,5 +1,3 @@
-// User.java
-
 package com.project.SmartSplit.entity;
 
 import jakarta.persistence.*;
@@ -41,6 +39,9 @@ public class User {
 
     @Column(nullable = false, length = 64)
     private String age;
+
+    @Column(nullable = false, length = 64)
+    private String gender;
 
     @ManyToMany(mappedBy = "users")
     private Set<Group> groups = new HashSet<>();

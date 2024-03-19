@@ -11,6 +11,7 @@ import com.project.SmartSplit.repository.RoleRepository;
 import com.project.SmartSplit.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -26,6 +27,7 @@ public class UserService {
     private final RoleRepository roleRepository;
     private final GroupRepository groupRepository;
     private final CardService cardService;
+    private final PasswordEncoder passwordEncoder;
 
     public UserDTO mapToDTO(User user) {
         UserDTO dto = new UserDTO();
@@ -34,6 +36,7 @@ public class UserService {
         dto.setLastName(user.getLastName());
         dto.setEmail(user.getEmail());
         dto.setAge(user.getAge());
+        dto.setGender(user.getGender());
         return dto;
     }
 
@@ -43,8 +46,9 @@ public class UserService {
         user.setFirstName(dto.getFirstName());
         user.setLastName(dto.getLastName());
         user.setEmail(dto.getEmail());
-        user.setPassword(dto.getPassword());
+        user.setPassword(passwordEncoder.encode(dto.getPassword()));
         user.setAge(dto.getAge());
+        user.setGender(dto.getGender());
         return user;
     }
 
@@ -76,6 +80,7 @@ public class UserService {
             userToUpdate.setEmail(userDTO.getEmail());
             userToUpdate.setPassword(userDTO.getPassword());
             userToUpdate.setAge(userDTO.getAge());
+            userToUpdate.setGender(userDTO.getGender());
             User updatedUser = userRepository.save(userToUpdate);
             return mapToDTO(updatedUser);
         }

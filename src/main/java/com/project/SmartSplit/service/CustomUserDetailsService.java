@@ -4,6 +4,7 @@ import com.project.SmartSplit.entity.Role;
 import com.project.SmartSplit.entity.User;
 import com.project.SmartSplit.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,6 +19,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class CustomUserDetailsService implements UserDetailsService {
 
+    @Autowired
     private final UserRepository userRepository;
 
     @Override
@@ -31,8 +33,6 @@ public class CustomUserDetailsService implements UserDetailsService {
             return new org.springframework.security.core.userdetails.User(
                     user.getEmail(),
                     user.getPassword(),
-                    // The mapRolesToAuthorities() method converts the user's roles to a list of GrantedAuthority objects,
-                    // which can be used for role based authentication and authorization.
                     mapRolesToAuthorities(user.getRoles())
 
             );

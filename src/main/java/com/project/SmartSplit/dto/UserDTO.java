@@ -28,6 +28,9 @@ public class UserDTO {
     @NotNull(message = "age cannot be empty")
     private String age;
 
+    @NotNull(message = "gender cannot be empty")
+    private String gender;
+
     private List<String> groupNames;
 
     private List<String> roleNames;

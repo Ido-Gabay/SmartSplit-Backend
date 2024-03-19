@@ -55,7 +55,7 @@ public class AppSecurity {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/test/**", "/login/**", "/logout/**",
                                 "/refresh_token/**").permitAll()
-                        .requestMatchers(("/users/**")).permitAll()
+                        .requestMatchers("/users/**").permitAll()
                         .requestMatchers("/groups/**").permitAll()
                         .requestMatchers("/payments/**").permitAll()
                         .requestMatchers("/cards/**").permitAll()

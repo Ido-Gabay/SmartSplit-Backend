@@ -30,7 +30,7 @@ public class AuthenticationService {
         UserDetails userDetails = customUserDetailsService.loadUserByUsername(authenticationRequest.getEmail());
 
         // check if the password matches the password in the database
-        if (!authenticationRequest.getPassword().equals(userDetails.getPassword())) {
+        if (!passwordEncoder.matches(authenticationRequest.getPassword(), userDetails.getPassword())) {
             throw new AuthenticationServiceException("Invalid credentials");
         }
 
@@ -51,5 +51,3 @@ public class AuthenticationService {
         return new AuthenticationResponse(jwtToken, refreshToken.getToken(), roles);
     }
 }
-
-
